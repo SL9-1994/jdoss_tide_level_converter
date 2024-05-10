@@ -1,0 +1,10 @@
+[package]
+name = "jtlc"
+version = "0.1.0-alpha"
+edition = "2021"
+authors = ["Eta Carinae"]
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
