@@ -9,3 +9,7 @@ license = "MIT"
 
 [dependencies]
 clap = { version = "4.5.4", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
+overflow-checks = true
