@@ -1,68 +1,48 @@
 pub struct Converter;
 
-/// The `Converter` struct provides methods for converting illegal text data to normal text data.
 impl Converter {
     /// Creates a new `Converter` instance.
     pub fn new() -> Self {
         Self {}
     }
 
-    /// Converts incorrect tidal text data to normal text data.
+    /// Converts missing digits to normal digits in the given text data.
     ///
     /// ## Arguments
     ///
-    /// * `txt_data` - The input text data to be converted.
+    /// * `txt_data` - The text data to convert.
     ///
     /// ## Returns
     ///
-    /// * The converted text data.
+    /// * The converted text data with missing digits replaced by normal digits.
     pub fn convert_missing_to_normal(&self, txt_data: String) -> String {
-        // -dオプションに渡されたディレクトリ名を保持し、ディレクトリ名.txtは変換を行わない。
         let mut result = String::new();
-        for line in txt_data.lines() {
-            // 20個連続のスペースがあるかどうかをチェック
-            if line.chars().take(20).all(|c| c == ' ') {
-                continue; // スペースが20個連続している行はスキップ
-            }
 
-            let mut chars = line.chars().collect::<Vec<_>>();
-            let mut i = 0;
-            while i < chars.len() - 3 {
-                if chars[i..i + 20].iter().all(|&c| c == ' ') {
-                    break; // 20個のスペースが見つかったら、その行の残りをスキップ
-                }
-                if chars[i] == '9'
-                    && chars[i + 1] == '9'
-                    && chars[i + 2] == '9'
-                    && chars[i + 3] == '9'
-                {
-                    if i + 4 >= chars.len() || chars[i + 4] != ' ' {
-                        chars.insert(i + 4, ' '); // 4つの9の後にスペースを挿入
-                    }
-                    i += 5; // 4つの9と新しく挿入したスペースをスキップ
-                } else if chars[i].is_digit(10)
-                    && chars[i + 1].is_digit(10)
-                    && chars[i + 2].is_digit(10)
-                    && (i + 3 >= chars.len() || chars[i + 3] != '-')
-                {
-                    if i + 3 >= chars.len() || chars[i + 3] != ' ' {
-                        chars.insert(i + 3, ' '); // 3つの数字の後にスペースを挿入
-                    }
-                    i += 4; // 3つの数字と新しく挿入したスペースをスキップ
+        for (_index, line) in txt_data.lines().enumerate() {
+            // 行の反転を行い、探索方向を逆順にする
+            let reversed_line: String = line.chars().rev().collect();
+
+            // 行の中に偶数桁で連続している9があったら、4桁ごと(前に)にスペースを挿入
+            let mut converted_line = String::new();
+            let mut count = 0;
+            let mut chars = reversed_line.chars().peekable();
+            // 各行の文字を逆順で探索を行う
+            while let Some(c) = chars.next() {
+                if c == '9' {
+                    count += 1;
                 } else {
-                    i += 1;
+                    count = 0;
+                }
+                converted_line.push(c);
+                if count % 4 == 0 && count > 0 && chars.peek().is_some() {
+                    converted_line.push(' ');
                 }
             }
 
-            result.push_str(&chars.into_iter().collect::<String>());
+            result.push_str(&converted_line.chars().rev().collect::<String>());
             result.push('\n');
         }
 
         result
     }
 }
-
-// 港湾局: 0~9
-// 国土地理院: GS
-// 気象庁: MA
-// 海上保安庁: HD
