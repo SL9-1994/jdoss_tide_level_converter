@@ -8,6 +8,7 @@
 |---|---|
 |[jtlc.exe](https://github.com/SL9-1994/jdoss_tide_level_converter/releases/latest/download/jtlc.exe)|x86_64-pc-windows-gnu|
 |[jtlc](https://github.com/SL9-1994/jdoss_tide_level_converter/releases/latest/download/jtlc)|x86_64-unknown-linux-gnu|
+|[jtlc_all_run.ps1](/jtlc_all_run.ps1)|Only for Windows|
 
 ## Usage
 
@@ -46,6 +47,11 @@
   -V, --version
           Print version
 ```
+
+## benefit
+**[jtlc_all_run.ps1](/jtlc_all_run.ps1)は、jtlc.exe -dの範囲を拡張し、  
+一度にフォルダに存在するすべての観測点のデータを変換することができます。  
+使用方法は、ファイル内に記載があります。**
 
 ## Critical information
 
