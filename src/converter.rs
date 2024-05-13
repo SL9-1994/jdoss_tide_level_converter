@@ -16,7 +16,8 @@ impl Converter {
     /// ## Returns
     ///
     /// * The converted text data.
-    pub fn convert_illegal_to_normal(&self, txt_data: String) -> String {
+    pub fn convert_missing_to_normal(&self, txt_data: String) -> String {
+        // -dオプションに渡されたディレクトリ名を保持し、ディレクトリ名.txtは変換を行わない。
         let mut result = String::new();
         for line in txt_data.lines() {
             // 20個連続のスペースがあるかどうかをチェック

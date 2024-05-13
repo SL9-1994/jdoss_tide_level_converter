@@ -27,7 +27,7 @@ fn main() {
             let txt_data = fs::read_to_string(&file_path).expect("Failed to read data from file");
 
             let converter = Converter::new();
-            let c_data = converter.convert_illegal_to_normal(txt_data);
+            let c_data = converter.convert_missing_to_normal(txt_data);
             let result = file_reader.write_files(c_data, &file_path);
             if result.is_ok() {
                 println!(
